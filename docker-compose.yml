@@ -1,0 +1,19 @@
+version: '3'
+services:
+  server:
+    image: "tgrosinger/simple-file-server"
+    restart: "always"
+    networks:
+      - traefik_default
+    command: "-root=/data"
+    labels:
+      - "traefik.port=80"
+      - "traefik.frontend.rule=<FRONTEND RULE>"
+      - "traefik.frontend.headers.SSLRedirect=true"
+      - "traefik.docker.network=traefik_default"
+      - "traefik.enable=true"
+    volumes:
+      - <DATA DIRECTORY>:/data
+networks:
+  traefik_default:
+    external: true
